@@ -1,7 +1,7 @@
 #!/bin/dash
 
 if [ -d .girt ]; then
-    echo ""$0": error: .girt already exists"
+    echo "girt-init: error: .girt already exists"
     exit 1
 fi
 
