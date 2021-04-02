@@ -1,0 +1,57 @@
+#!/bin/dash
+
+#Make sure there has been a previous init
+if [ ! -d .girt ]; then
+    echo ""$0": error: girt repository directory .girt not found"
+    exit 1
+fi
+
+# Find the name of this commit and the previous commit
+i=0
+found="false"
+
+while [ "$found" = "false" ]; do
+    if [ ! -d .girt/commits/"commit $i" ]; then
+        new_commit_name="commit "$i""
+        prev_commit_name="commit "$((i - 1))""
+        found="true"
+    else
+        i="$((i + 1))"
+    fi
+done
+
+# Delete all of the files from the index that are identical to the corresponding
+# files in the previous commit, unless this is the first commit
+for filename in .girt/index/*; do
+    short_filename="$(echo "$filename" | sed 's/\.girt\/index\///')"
+    if [ "$new_commit_name" != "commit 0" -a -e .girt/commits/"$prev_commit_name"/"$short_filename" ] \
+        && diff .girt/commits/"$prev_commit_name"/"$short_filename" "$filename"; then
+        rm "$filename"
+    fi
+done
+
+# If the index is now empty then this means there are no changes to be committed
+if [ -z "$(ls .girt/index)" ]; then
+    echo "nothing to commit"
+    exit 1
+fi
+
+
+mkdir .girt/commits/"$new_commit_name"
+
+
+# If this is not the first commit, copy over all of the files from the previous
+# commit to this commit
+if [ "$new_commit_name" != "commit 0" ]; then 
+    for filename in .girt/commits/"$prev_commit_name"/*; do
+        cp "$filename" .girt/commits/"$new_commit_name"
+    done
+fi
+
+# Copy the files from the index to the current commit repository
+for filename in .girt/index/*; do
+    cp "$filename" .girt/commits/"$new_commit_name"
+done
+
+
+echo "Committed as "$new_commit_name""
