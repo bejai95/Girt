@@ -1,0 +1,5 @@
+26/3/2021: 12:00 - 13:00
+Looked over assignemnt spec and started creating diary
+
+27/3/2021: 8:30 - 9:30
+Worked on subset 0 and finished girt-init
