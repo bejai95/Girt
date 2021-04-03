@@ -61,14 +61,16 @@ for filename in .girt/index/*; do
     cp "$filename" .girt/commits/"$new_commit_name"
 done
 
-#Copy the commit number and message onto file commit_messages.txt
+#Copy the commit number and message into file commit_messages.txt
 if [ "$#" -eq 2 ]; then
     commit_message="$2"
 else
     commit_message="$3"
 fi
 commit_number="$(echo "$new_commit_name" | cut -d' ' -f2)"
-echo ""$commit_number" "$commit_message"" >> .girt/commit_messages.txt
+# Need to append to the top of commit_messages.txt
+echo ""$commit_number" "$commit_message"
+$(cat .girt/commit_messages.txt)" > .girt/commit_messages.txt
 
 
 echo "Committed as "$new_commit_name""

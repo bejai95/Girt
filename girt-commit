@@ -61,7 +61,7 @@ for filename in .girt/index/*; do
     cp "$filename" .girt/commits/"$new_commit_name"
 done
 
-#Copy the commit number and message onto file commit_messages.txt
+#Copy the commit number and message into file commit_messages.txt
 if [ "$#" -eq 2 ]; then
     commit_message="$2"
 else

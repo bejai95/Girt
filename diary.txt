@@ -12,3 +12,6 @@ Worked on subset 0 and did most of girt-commit, had a couple of major bugs that 
 
 31/3/2021: 10:00 - 13:00
 Worked on subset 0 and finished off girt-commit and girt-log
+
+31/3/2021: 16:00 - 17:00
+Fixed up girt-log, previously wasn't outputting commits in reverse order
