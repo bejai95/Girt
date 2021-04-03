@@ -1,0 +1,50 @@
+#!/bin/dash
+
+# Make sure there has been a previous init
+if [ ! -d .girt ]; then
+    echo ""$0": error: girt repository directory .girt not found"
+    exit 1
+fi
+
+# Make sure that there is only 1 command line argument given
+if [ "$#" -ne 1 ]; then
+    echo "usage: "$0" <commit>:<filename>"
+    exit 1
+fi
+
+# Make sure the command line argument matchs pattern [commit]:filename
+if echo "$1" | grep -E -q '[^:]*:[^:]*'; then
+    :
+else
+    echo ""$0": error: invalid object "$1""
+    exit 1
+fi
+
+# Make sure that if there is an integer provided, it is the number of an existing commit
+commit_number="$(echo "$1" | cut -d: -f1)"
+if [ "$commit_number" != "" -a ! -d .girt/commits/"commit "$commit_number"" ]; then
+    echo ""$0": error: unknown commit '"$commit_number"'"
+    exit 1
+fi
+
+# Make sure that the filename specified exists in the commit or index
+filename="$(echo "$1" | cut -d: -f2)"
+if [ "$commit_number" = "" -a ! -f ".girt/index/"$filename"" ]; then
+    echo ""$0": error: '"$filename"' not found in index"
+    exit 1
+elif [ "$commit_number" != "" -a ! -f ".girt/commits/commit "$commit_number"/"$filename"" ]; then
+    echo ""$0": error: '"$filename"' not found in commit "$commit_number""
+    exit 1
+fi
+
+# Print the contents of filename as of the specified commit
+if [ "$commit_number" = "" ]; then
+    echo "$(cat .girt/index/"$filename")"
+else
+    echo "$(cat .girt/commits/"commit "$commit_number""/"$filename")"
+fi
+
+
+
+
+

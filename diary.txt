@@ -18,3 +18,6 @@ Fixed up girt-log, previously wasn't outputting commits in reverse order
 
 3/04/2021: 14:30 - 14:46
 Fixed up a minor bug in girt-commit, was oututting the result from diff, now appending to /dev/null
+
+3/04/2021: 15:00 - 17:00
+finished girt-show, now passing all autotests for subset 0, just need to write more test scripts
