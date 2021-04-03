@@ -1,12 +1,19 @@
 #!/bin/dash
 
+# Check that there are no command line arguments given
+if [ "$#" -gt 0 ]; then
+    echo "usage: "$0""
+    exit 1
+fi
+
 if [ -d .girt ]; then
-    echo "girt-init: error: .girt already exists"
+    echo ""$0": error: .girt already exists"
     exit 1
 fi
 
 mkdir .girt
 mkdir .girt/index
 mkdir .girt/commits
+echo "" > .girt/commit_messages.txt
 
 echo "Initialized empty girt repository in .girt"

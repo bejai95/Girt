@@ -1,9 +1,14 @@
 #!/bin/dash
 
-#Make sure there has been a previous init
+# Make sure there has been a previous init
 if [ ! -d .girt ]; then
     echo ""$0": error: girt repository directory .girt not found"
     exit 1
+fi
+
+# Make sure that girt-add is given at least 1 command line argument
+if [ "$#" -eq 0 ]; then
+    echo "usage: "$0" <filenames>"
 fi
 
 
