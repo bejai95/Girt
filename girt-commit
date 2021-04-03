@@ -33,7 +33,7 @@ done
 for filename in .girt/index/*; do
     short_filename="$(echo "$filename" | sed 's/\.girt\/index\///')"
     if [ "$new_commit_name" != "commit 0" -a -e .girt/commits/"$prev_commit_name"/"$short_filename" ] \
-        && diff .girt/commits/"$prev_commit_name"/"$short_filename" "$filename"; then
+        && diff .girt/commits/"$prev_commit_name"/"$short_filename" "$filename" > /dev/null; then
         rm "$filename"
     fi
 done

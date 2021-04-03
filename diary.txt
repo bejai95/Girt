@@ -15,3 +15,6 @@ Worked on subset 0 and finished off girt-commit and girt-log
 
 31/3/2021: 16:00 - 17:00
 Fixed up girt-log, previously wasn't outputting commits in reverse order
+
+3/04/2021: 14:30 - 14:46
+Fixed up a minor bug in girt-commit, was oututting the result from diff, now appending to /dev/null
