@@ -6,6 +6,7 @@ if [ "$#" -gt 0 ]; then
     exit 1
 fi
 
+
 if [ -d .girt ]; then
     echo ""$0": error: .girt already exists"
     exit 1

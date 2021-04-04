@@ -30,3 +30,6 @@ Fixed up the way that commit works, no longer deletes files from the index
 
 4/04/2021: 13:30 - 15:00
 My first attempt at commit -a. Backing up in case something goes wrong with testing. 
+
+4/04/2021: 16:00 - 24:00
+Fixed up a whole heap of error checking stuff with most of my scripts

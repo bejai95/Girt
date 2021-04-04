@@ -1,0 +1,69 @@
+#!/bin/dash
+
+# Make sure there has been a previous init
+if [ ! -d .girt ]; then
+    echo ""$0": error: girt repository directory .girt not found"
+    exit 1
+fi
+
+# Check that after any --force or --cached options there is at least one file given to remove from index
+if [ "$#" -eq 0 ]; then
+    echo "usage: "$0" [--force] [--cached] <filenames>"
+    exit 1
+elif [ "$1" = "--force" ]; then
+    if [ "$#" -eq 1 ]; then
+        echo "usage: "$0" [--force] [--cached] <filenames>"
+        exit 1
+    elif [ "$2" = "--cached" ]; then
+        if [ "$#" -eq 2 ]; then
+            echo "usage: "$0" [--force] [--cached] <filenames>"
+            exit 1
+        else
+            filename_arg_start_no=3
+        fi
+    else
+        filename_arg_start_no=2
+    fi
+elif [ "$1" = "--cached" ]; then
+    if [ "$#" -eq 1 ]; then
+        echo "usage: "$0" [--force] [--cached] <filenames>"
+        exit 1  
+    else
+        filename_arg_start_no=2
+    fi
+else # No options given but at least file given to remove from index
+    filename_arg_start_no=1
+fi
+
+# Make sure no other command line arguments start with -[a-zA-Z._] or --.
+arg_no=1 # Since shell command line arguments start with $1
+for arg in "$@"; do
+    if ( echo "$arg" | grep -E -q '^-[a-zA-Z._]' || echo "$arg" | grep -E -q '^--.' ) && \
+    [ "$arg_no" -ge "$filename_arg_start_no" ]; then
+        echo "usage: "$0" [--force] [--cached] <filenames>"
+        exit 1
+    fi
+    arg_no="$((arg_no + 1))"
+done
+
+# Actual loop, fix this comment
+for filename in "$@"; do
+    # Test that filename is valid
+    if echo "$filename" | grep -E -q '^[._-]'; then
+        echo ""$0": error: invalid filename '"$filename"'"
+        exit 1
+    fi
+    
+    # Test that filename refers to a file which exists within the index
+    if [ ! -e "$filename" ]; then
+        echo ""$0": error: '"$filename"' is not in the girt repository"
+        exit 1
+    fi
+done
+
+        
+
+
+
+        
+    

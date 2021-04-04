@@ -27,8 +27,14 @@ if [ "$commit_number" != "" -a ! -d .girt/commits/"commit "$commit_number"" ]; t
     exit 1
 fi
 
-# Make sure that the filename specified exists in the commit or index
+# Test that the file name provided is valid
 filename="$(echo "$1" | cut -d: -f2)"
+if echo "$filename" | grep -E -q '^[._-]'; then
+    echo ""$0": error: invalid filename '"$filename"'"
+    exit 1
+fi
+
+# Make sure that the filename specified exists in the commit or index
 if [ "$commit_number" = "" -a ! -f ".girt/index/"$filename"" ]; then
     echo ""$0": error: '"$filename"' not found in index"
     exit 1
