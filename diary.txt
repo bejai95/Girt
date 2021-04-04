@@ -27,3 +27,6 @@ Started looking at the spec for subset 1, realised I've completely misunderstood
 
 4/04/2021: 11:30 - 13:10 
 Fixed up the way that commit works, no longer deletes files from the index
+
+4/04/2021: 13:30 - 15:00
+My first attempt at commit -a. Backing up in case something goes wrong with testing. 
