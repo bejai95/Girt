@@ -17,7 +17,6 @@ fi
 # Find the name of this commit and the previous commit
 i=0
 found="false"
-
 while [ "$found" = "false" ]; do
     if [ ! -d .girt/commits/"commit $i" ]; then
         new_commit_name="commit "$i""
@@ -28,40 +27,37 @@ while [ "$found" = "false" ]; do
     fi
 done
 
-# Delete all of the files from the index that are identical to the corresponding
-# files in the previous commit, unless this is the first commit
-for filename in .girt/index/*; do
-    short_filename="$(echo "$filename" | sed 's/\.girt\/index\///')"
-    if [ "$new_commit_name" != "commit 0" -a -e .girt/commits/"$prev_commit_name"/"$short_filename" ] \
-        && diff .girt/commits/"$prev_commit_name"/"$short_filename" "$filename" > /dev/null; then
-        rm "$filename"
-    fi
-done
-
-# If the index is now empty then this means there are no changes to be committed
+# If the index is empty then there is nothing to commit
 if [ -z "$(ls .girt/index)" ]; then
     echo "nothing to commit"
     exit 1
 fi
 
-
-mkdir .girt/commits/"$new_commit_name"
-
-
-# If this is not the first commit, copy over all of the files from the previous
-# commit to this commit
-if [ "$new_commit_name" != "commit 0" ]; then 
-    for filename in .girt/commits/"$prev_commit_name"/*; do
-        cp "$filename" .girt/commits/"$new_commit_name"
-    done
+# Check that there have been changes in the index since the most recent commit
+new_changes="false"
+for filename in .girt/index/*; do
+    short_filename="$(echo "$filename" | sed 's/\.girt\/index\///')"
+    if [ "$new_commit_name" = "commit 0" ] || \
+       [ ! -e .girt/commits/"$prev_commit_name"/"$short_filename" ] || \
+       ! diff .girt/commits/"$prev_commit_name"/"$short_filename" "$filename" > /dev/null
+    then
+        new_changes="true"
+        break
+    fi
+done
+if [ "$new_changes" = "false" ]; then
+    echo "nothing to commit"
+    exit 1
 fi
+    
 
-# Copy the files from the index to the current commit repository
+# Save a copy of all files in the index to the new commit's repository
+mkdir .girt/commits/"$new_commit_name"
 for filename in .girt/index/*; do
     cp "$filename" .girt/commits/"$new_commit_name"
 done
 
-#Copy the commit number and message into file commit_messages.txt
+# Copy the commit number and message into file commit_messages.txt
 if [ "$#" -eq 2 ]; then
     commit_message="$2"
 else
@@ -70,5 +66,5 @@ fi
 commit_number="$(echo "$new_commit_name" | cut -d' ' -f2)"
 echo ""$commit_number" "$commit_message"" >> .girt/commit_messages.txt
 
-
+# Output that the commit has been completed successfully
 echo "Committed as "$new_commit_name""

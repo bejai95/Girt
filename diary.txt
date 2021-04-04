@@ -21,3 +21,9 @@ Fixed up a minor bug in girt-commit, was oututting the result from diff, now app
 
 3/04/2021: 15:00 - 17:00
 finished girt-show, now passing all autotests for subset 0, just need to write more test scripts
+
+3/04/2021: 18:30 - 19:50
+Started looking at the spec for subset 1, realised I've completely misunderstood how the index is supposed to work. Don't actually know how I passed the autotests for subset 0. 
+
+4/04/2021: 11:30 - 13:10 
+Fixed up the way that commit works, no longer deletes files from the index

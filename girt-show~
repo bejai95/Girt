@@ -43,8 +43,3 @@ if [ "$commit_number" = "" ]; then
 else
     echo "$(cat .girt/commits/"commit "$commit_number""/"$filename")"
 fi
-
-
-
-
-
