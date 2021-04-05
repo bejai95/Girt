@@ -2,21 +2,21 @@
 
 # Make sure there has been a previous init
 if [ ! -d .girt ]; then
-    echo ""$0": error: girt repository directory .girt not found"
+    echo ""$0": error: girt repository directory .girt not found" 1>&2
     exit 1
 fi
 
 # Check that after any --force or --cached options there is at least one file given to remove from index
 if [ "$#" -eq 0 ]; then
-    echo "usage: "$0" [--force] [--cached] <filenames>"
+    echo "usage: "$0" [--force] [--cached] <filenames>" 1>&2
     exit 1
 elif [ "$1" = "--force" ]; then
     if [ "$#" -eq 1 ]; then
-        echo "usage: "$0" [--force] [--cached] <filenames>"
+        echo "usage: "$0" [--force] [--cached] <filenames>" 1>&2
         exit 1
     elif [ "$2" = "--cached" ]; then
         if [ "$#" -eq 2 ]; then
-            echo "usage: "$0" [--force] [--cached] <filenames>"
+            echo "usage: "$0" [--force] [--cached] <filenames>" 1>&2
             exit 1
         else
             filename_arg_start_no=3
@@ -26,7 +26,7 @@ elif [ "$1" = "--force" ]; then
     fi
 elif [ "$1" = "--cached" ]; then
     if [ "$#" -eq 1 ]; then
-        echo "usage: "$0" [--force] [--cached] <filenames>"
+        echo "usage: "$0" [--force] [--cached] <filenames>" 1>&2
         exit 1  
     else
         filename_arg_start_no=2
@@ -40,7 +40,7 @@ arg_no=1 # Since shell command line arguments start with $1
 for arg in "$@"; do
     if ( echo "$arg" | grep -E -q '^-[a-zA-Z._]' || echo "$arg" | grep -E -q '^--.' ) && \
     [ "$arg_no" -ge "$filename_arg_start_no" ]; then
-        echo "usage: "$0" [--force] [--cached] <filenames>"
+        echo "usage: "$0" [--force] [--cached] <filenames>" 1>&2
         exit 1
     fi
     arg_no="$((arg_no + 1))"
@@ -56,13 +56,13 @@ for filename in "$@"; do
 
     # Test that filename is valid
     if echo "$filename" | grep -E -q '^[._-]'; then
-        echo ""$0": error: invalid filename '"$filename"'"
+        echo ""$0": error: invalid filename '"$filename"'" 1>&2
         exit 1
     fi
     
     # Test that filename refers to a file which exists within the index
     if [ ! -e .girt/index/"$filename" ]; then
-        echo ""$0": error: '"$filename"' is not in the girt repository"
+        echo ""$0": error: '"$filename"' is not in the girt repository" 1>&2
         exit 1
     fi
     
@@ -103,18 +103,18 @@ for filename in "$@"; do
     if [ "$1" != "--force" ]; then
         if [ "$1" = "--cached" ]; then
             if [ "$matches_curr_dir" = "false" -a "$matches_most_recent" = "false" ]; then
-                echo ""$0": error: '"$filename"' in index is different to both to the working file and the repository"
+                echo ""$0": error: '"$filename"' in index is different to both to the working file and the repository" 1>&2
                 exit 1
             fi
         else # No options were given
             if [ "$matches_curr_dir" = "false" -a "$matches_most_recent" = "false" ]; then
-                echo ""$0": error: '"$filename"' in index is different to both to the working file and the repository"
+                echo ""$0": error: '"$filename"' in index is different to both to the working file and the repository" 1>&2
                 exit 1
             elif [ "$matches_curr_dir" = "true" -a "$matches_most_recent" = "false" ]; then
-                echo ""$0": error: '"$filename"' has staged changes in the index"
+                echo ""$0": error: '"$filename"' has staged changes in the index" 1>&2
                 exit 1
             elif [ "$matches_curr_dir" = "false" -a "$matches_most_recent" = "true" ]; then
-                echo ""$0": error: '"$filename"' in the repository is different to the working file"
+                echo ""$0": error: '"$filename"' in the repository is different to the working file" 1>&2
                 exit 1
             fi
         fi

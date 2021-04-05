@@ -2,19 +2,19 @@
 
 # Make sure there has been a previous init
 if [ ! -d .girt ]; then
-    echo ""$0": error: girt repository directory .girt not found"
+    echo ""$0": error: girt repository directory .girt not found" 1>&2
     exit 1
 fi
 
 # Make sure that girt-add is given at least 1 command line argument and that no 
 # command line argument starts with -[a-zA-Z._] or --.
 if [ "$#" -eq 0 ]; then
-    echo "usage: "$0" <filenames>"
+    echo "usage: "$0" <filenames>" 1>&2
     exit 1
 fi
 for arg in "$@"; do
     if echo "$arg" | grep -E -q '^-[a-zA-Z._]' || echo "$arg" | grep -E -q '^--.'; then
-        echo "usage: "$0" <filenames>"
+        echo "usage: "$0" <filenames>" 1>&2
         exit 1
     fi
 done
@@ -23,7 +23,7 @@ done
 for filename in $@; do
     # Test that filename is valid
     if echo "$filename" | grep -E -q '^[._-]'; then
-        echo ""$0": error: invalid filename '"$filename"'"
+        echo ""$0": error: invalid filename '"$filename"'" 1>&2
         exit 1
     fi
     
@@ -33,7 +33,7 @@ for filename in $@; do
     # If it is in the current directory then test that it is an ordinary file
     if [ -e "$filename" ]; then
         if [ ! -f "$filename" ]; then
-            echo ""$0": error: invalid filename '"$filename"'"
+            echo ""$0": error: '"$filename"' is not a regular file" 1>&2
             exit 1
         else
             cp "$filename" .girt/index
@@ -41,7 +41,7 @@ for filename in $@; do
     elif [ -e .girt/index/"$filename" ]; then
         rm .girt/index/"$filename"
     else
-        echo ""$0": error: can not open '"$filename"'"
+        echo ""$0": error: can not open '"$filename"'" 1>&2
         exit 1
     fi
 done

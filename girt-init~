@@ -2,12 +2,13 @@
 
 # Check that there are no command line arguments given
 if [ "$#" -gt 0 ]; then
-    echo "usage: "$0""
+    echo "usage: "$0"" 1>&2
     exit 1
 fi
 
+
 if [ -d .girt ]; then
-    echo ""$0": error: .girt already exists"
+    echo ""$0": error: .girt already exists" 1>&2
     exit 1
 fi
 

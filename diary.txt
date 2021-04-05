@@ -1,19 +1,19 @@
-26/3/2021: 12:00 - 13:00
+2/04/2021: 12:00 - 13:00
 Looked over assignemnt spec and started creating diary
 
-27/3/2021: 20:30 - 21:30
+2/04/2021: 20:30 - 21:30
 Worked on subset 0 and finished girt-init
 
-29/3/2021: 21:30 - 23:10
+2/04/2021: 21:30 - 23:10
 Worked on subset 0 and finished girt-add
 
-30/3/2021: 16:00 - 21:00
+3/04/2021: 05:00 - 10:00
 Worked on subset 0 and did most of girt-commit, had a couple of major bugs that I spent most of that time debugging
 
-31/3/2021: 10:00 - 13:00
+3/04/2021: 10:00 - 13:00
 Worked on subset 0 and finished off girt-commit and girt-log
 
-31/3/2021: 16:00 - 17:00
+3/04/2021: 13:00 - 14:00
 Fixed up girt-log, previously wasn't outputting commits in reverse order
 
 3/04/2021: 14:30 - 14:46
@@ -36,3 +36,6 @@ Fixed up a whole heap of error checking stuff with most of my scripts
 
 5/04/2021: 11:00 - 20:00
 Went on an absolute massive grind to finish girt-rm. Also couldn't use give last night because the server was down for some reason.
+
+5/04/2021: 20:00 - 24:00
+Started working on test scripts and fixed up some errors that this showed me
