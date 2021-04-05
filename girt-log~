@@ -2,13 +2,13 @@
 
 # Make sure there has been a previous init
 if [ ! -d .girt ]; then
-    echo ""$0": error: girt repository directory .girt not found"
+    echo ""$0": error: girt repository directory .girt not found" 1>&2
     exit 1
 fi
 
 # Check that there are no command line arguments given
 if [ "$#" -gt 0 ]; then
-    echo "usage: "$0""
+    echo "usage: "$0"" 1>&2
     exit 1
 fi
 
