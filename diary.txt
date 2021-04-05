@@ -45,3 +45,6 @@ Worked on more test scripts and fixed up a couple of minor bugs
 
 6/04/2021: 3:20 - 5:00
 More test scripts
+
+6/04/2021: 5:00 - 7:00
+Finally nearly finished writing test scripts

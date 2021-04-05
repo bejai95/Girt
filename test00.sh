@@ -8,7 +8,7 @@ export PATH=$PATH:.
 
 ################################################################################
 # Tests for 2041 girt - these will write the expected output (for both stdout
-# and stderr) of the reference girt-rm script with the tests onto 1.txt
+# and stderr) of the reference girt-init script with the tests onto 1.txt
 ################################################################################
 
 (
@@ -32,7 +32,7 @@ fi
 
 ################################################################################
 # Tests for ./girt - these will write the output (for both stdout and stderr) of
-# my girt-rm script with the tests onto 2.txt
+# my girt-init script with the tests onto 2.txt
 ################################################################################
 
 (

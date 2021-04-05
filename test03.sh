@@ -39,6 +39,9 @@ echo "Adding different stuff" >> b
 2041 girt-show 0:b
 2041 girt-show 2:b
 
+# Test that when using the -a flag the file gets re-added to the index
+2041 girt-show :b
+
 # Make sure c doesn't exist on first commit
 2041 girt-show 0:c
 
@@ -86,6 +89,9 @@ echo "Adding different stuff" >> b
 girt-commit -a -m "na yeah"
 girt-show 0:b
 girt-show 2:b
+
+# Test that when using the -a flag the file gets re-added to the index
+girt-show :b
 
 # Make sure c doesn't exist on first commit
 girt-show 0:c
