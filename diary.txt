@@ -39,3 +39,6 @@ Went on an absolute massive grind to finish girt-rm. Also couldn't use give last
 
 5/04/2021: 20:00 - 24:00
 Started working on test scripts and fixed up some errors that this showed me
+
+6/04/2021: 00:15 - 3:20
+Worked on more test scripts and fixed up a couple of mino bugs

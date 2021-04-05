@@ -2,13 +2,13 @@
 
 # Make sure there has been a previous init
 if [ ! -d .girt ]; then
-    echo ""$0": error: girt repository directory .girt not found"
+    echo ""$0": error: girt repository directory .girt not found" 1>&2
     exit 1
 fi
 
 # Make sure that the syntax for the inputted command line arguments is correct
 if [ "$#" -ne 2 -a "$#" -ne 3 ]; then
-    echo "usage: "$0" [-a] -m commit-message"
+    echo "usage: "$0" [-a] -m commit-message" 1>&2
     exit 1
 else
     if [ "$#" -eq 2 ] && [ "$1" = "-m" ] &&  \
@@ -18,7 +18,7 @@ else
     ! ( echo "$3" | grep -E -q '^-[a-zA-Z._]' || echo "$3" | grep -E -q '^--.' ); then
         :
     else   
-        echo "usage: "$0" [-a] -m commit-message"
+        echo "usage: "$0" [-a] -m commit-message" 1>&2
         exit 1
     fi
 fi
@@ -51,12 +51,12 @@ fi
 # Check that there have been changes in the index since the most recent commit
 if [ "$new_commit_name" = "commit 0" ]; then
     if [ -z "$(ls .girt/index)" ]; then
-        echo "nothing to commit"
+        echo "nothing to commit" 1>&2
         exit 1
     fi
 else
     if diff -r .girt/index .girt/commits/"$prev_commit_name" > /dev/null; then
-        echo "nothing to commit"
+        echo "nothing to commit" 1>&2
         exit 1
     fi
 fi
