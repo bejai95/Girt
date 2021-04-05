@@ -27,17 +27,21 @@ for filename in $@; do
         exit 1
     fi
     
-    # Test that filename refers to a file that exists
-    if [ ! -e "$filename" ]; then
+    # Test that filename refers to a file that exists, and if it does exist
+    # then copy it to the index if it exists in the current directory, or if
+    # it only exists in the index then delete it from the index
+    # If it is in the current directory then test that it is an ordinary file
+    if [ -e "$filename" ]; then
+        if [ ! -f "$filename" ]; then
+            echo ""$0": error: invalid filename '"$filename"'"
+            exit 1
+        else
+            cp "$filename" .girt/index
+        fi
+    elif [ -e .girt/index/"$filename" ]; then
+        rm .girt/index/"$filename"
+    else
         echo ""$0": error: can not open '"$filename"'"
         exit 1
     fi
-    
-    # Test that filename refers to a file that is an ordinary file
-    if [ ! -f "$filename" ]; then
-        echo ""$0": error: invalid filename '"$filename"'"
-        exit 1
-    fi
-    
-    cp "$filename" .girt/index
 done

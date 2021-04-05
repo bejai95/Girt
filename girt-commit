@@ -63,9 +63,11 @@ fi
 
 # Save a copy of all files in the index to the new commit's repository
 mkdir .girt/commits/"$new_commit_name"
-for filename in .girt/index/*; do
-    cp "$filename" .girt/commits/"$new_commit_name"
-done
+if [ ! -z "$(ls .girt/index)" ]; then
+    for filename in .girt/index/*; do
+        cp "$filename" .girt/commits/"$new_commit_name"
+    done
+fi
 
 # Copy the commit number and message into file commit_messages.txt
 if [ "$#" -eq 2 ]; then

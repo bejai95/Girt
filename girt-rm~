@@ -46,8 +46,14 @@ for arg in "$@"; do
     arg_no="$((arg_no + 1))"
 done
 
-# Actual loop, fix this comment
+# Loop over all of the filenames which were given as command line arguemnts
+arg_no=1 # Since shell command line arguments start with $1
 for filename in "$@"; do
+    if [ ! "$arg_no" -ge "$filename_arg_start_no" ]; then
+        arg_no="$((arg_no + 1))"
+        continue
+    fi
+
     # Test that filename is valid
     if echo "$filename" | grep -E -q '^[._-]'; then
         echo ""$0": error: invalid filename '"$filename"'"
@@ -55,15 +61,69 @@ for filename in "$@"; do
     fi
     
     # Test that filename refers to a file which exists within the index
-    if [ ! -e "$filename" ]; then
+    if [ ! -e .girt/index/"$filename" ]; then
         echo ""$0": error: '"$filename"' is not in the girt repository"
         exit 1
     fi
-done
-
-        
-
-
-
-        
     
+    # Check whether filename matches and is identical to a file in the current directory
+    matches_curr_dir="false"
+    if [ ! -z "$(ls)" ]; then
+        for curr_dir_file in *; do
+            if [ "$curr_dir_file" = "$filename" ] && diff .girt/index/"$filename" "$curr_dir_file" > /dev/null; then
+                matches_curr_dir="true"
+            fi
+        done
+    fi
+    
+    # Find the number of the most recent commit
+    i=0
+    found="false"
+    while [ "$found" = "false" ]; do
+        if [ ! -d .girt/commits/"commit "$i"" ]; then
+            most_recent_num="$((i - 1))"
+            found="true"
+        else
+            i="$((i + 1))"
+        fi
+    done
+    
+    # Check whether filename matches and is identical to a file in the most recent commit
+    matches_most_recent="false"
+    if [ "$most_recent_num" -ne -1 ] && [ ! -z "$(ls .girt/commits/"commit "$most_recent_num"")" ]; then
+        for most_recent_commit_file in .girt/commits/"commit "$most_recent_num""/*; do
+            short_filename="$(echo "$most_recent_commit_file" | cut -d/ -f4)"
+            if [ "$short_filename" = "$filename" ] && diff .girt/index/"$filename" "$most_recent_commit_file" > /dev/null; then
+                matches_most_recent="true"
+            fi
+        done
+    fi
+    
+    # Give error messages if required 
+    if [ "$1" != "--force" ]; then
+        if [ "$1" = "--cached" ]; then
+            if [ "$matches_curr_dir" = "false" -a "$matches_most_recent" = "false" ]; then
+                echo ""$0": error: '"$filename"' in index is different to both to the working file and the repository"
+                exit 1
+            fi
+        else # No options were given
+            if [ "$matches_curr_dir" = "false" -a "$matches_most_recent" = "false" ]; then
+                echo ""$0": error: '"$filename"' in index is different to both to the working file and the repository"
+                exit 1
+            elif [ "$matches_curr_dir" = "true" -a "$matches_most_recent" = "false" ]; then
+                echo ""$0": error: '"$filename"' has staged changes in the index"
+                exit 1
+            elif [ "$matches_curr_dir" = "false" -a "$matches_most_recent" = "true" ]; then
+                echo ""$0": error: '"$filename"' in the repository is different to the working file"
+                exit 1
+            fi
+        fi
+    fi
+    
+    # Remove the file from the index, and from the current directory if --cached is not an argument
+    rm .girt/index/"$filename"
+    if ! [ "$1" = "--cached" -o "$2" = "--cached" ]; then
+        rm "$filename"
+    fi
+    arg_no="$((arg_no + 1))"
+done

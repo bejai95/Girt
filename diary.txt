@@ -33,3 +33,6 @@ My first attempt at commit -a. Backing up in case something goes wrong with test
 
 4/04/2021: 16:00 - 24:00
 Fixed up a whole heap of error checking stuff with most of my scripts
+
+5/04/2021: 11:00 - 20:00
+Went on an absolute massive grind to finish girt-rm. Also couldn't use give last night because the server was down for some reason.
