@@ -26,6 +26,9 @@ fi
 2041 girt-log f
 2041 girt-log a b c
 
+#Try doing girt-log when there has been no previous commits, should do nothing
+2041 girt-log
+
 # Make lots of commits and then use test girt-log with correct syntax
 touch a b c d e
 2041 girt-add a
@@ -63,6 +66,9 @@ girt-init
 # Try doing a girt-log with command line arguments, should produce usage error
 girt-log f
 girt-log a b c
+
+#Try doing girt-log when there has been no previous commits, should do nothing
+girt-log
 
 # Make lots of commits and then use test girt-log with correct syntax
 touch a b c d e

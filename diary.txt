@@ -48,3 +48,6 @@ More test scripts
 
 6/04/2021: 5:00 - 7:00
 Finally nearly finished writing test scripts
+
+6/04/2021: 8:00 - 12:00
+Did some final styling stuff and finished with the test scripts

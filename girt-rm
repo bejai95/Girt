@@ -70,7 +70,8 @@ for filename in "$@"; do
     matches_curr_dir="false"
     if [ ! -z "$(ls)" ]; then
         for curr_dir_file in *; do
-            if [ "$curr_dir_file" = "$filename" ] && diff .girt/index/"$filename" "$curr_dir_file" > /dev/null; then
+            if [ "$curr_dir_file" = "$filename" ] \
+            && diff .girt/index/"$filename" "$curr_dir_file" > /dev/null; then
                 matches_curr_dir="true"
             fi
         done
@@ -90,10 +91,12 @@ for filename in "$@"; do
     
     # Check whether filename matches and is identical to a file in the most recent commit
     matches_most_recent="false"
-    if [ "$most_recent_num" -ne -1 ] && [ ! -z "$(ls .girt/commits/"commit "$most_recent_num"")" ]; then
+    if [ "$most_recent_num" -ne -1 ] \
+    && [ ! -z "$(ls .girt/commits/"commit "$most_recent_num"")" ]; then
         for most_recent_commit_file in .girt/commits/"commit "$most_recent_num""/*; do
             short_filename="$(echo "$most_recent_commit_file" | cut -d/ -f4)"
-            if [ "$short_filename" = "$filename" ] && diff .girt/index/"$filename" "$most_recent_commit_file" > /dev/null; then
+            if [ "$short_filename" = "$filename" ] \
+            && diff .girt/index/"$filename" "$most_recent_commit_file" > /dev/null; then
                 matches_most_recent="true"
             fi
         done
